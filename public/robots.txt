@@ -1,3 +1,53 @@
-# https://www.robotstxt.org/robotstxt.html
+$ git clone https://github.com/google/robotstxt.git robotstxt
+Cloning into 'robotstxt'...
+...
+$ cd robotstxt/
+...
+$ mkdir c-build && cd c-build
+...
+$ cmake .. -DROBOTS_BUILD_TESTS=ON
+...
+$ make
+...
+$ make test
+Running tests...
+Test project robotstxt/c-build
+    Start 1: robots-test
+1/1 Test #1: robots-test ......................   Passed    0.02 sec
+
+100% tests passed, 0 tests failed out of 1
+
+Total Test time (real) =   0.02 sec
+...
+$ robots ~/local/path/to/robots.txt YourBot https://example.com/url
+  user-agent 'YourBot' with url 'https://example.com/url' allowed: YES
+https://github.com/google/robotstxt.git
+$ git clone https://github.com/google/robotstxt.git robotstxt
+Cloning into 'robotstxt'...
+...
+$ cd robotstxt/
+bazel-robots$ bazel test :robots_test
+...
+/:robots_test                                                      PASSED in 0.1s
+
+Executed 1 out of 1 test: 1 test passes.
+...
+bazel-robots$ bazel build :robots_main
+...
+Target //:robots_main up-to-date:
+  bazel-bin/robots_main
+...
+bazel-robots$ bazel run robots_main -- ~/local/path/to/robots.txt YourBot https://example.com/url
+  user-agent 'YourBot' with url 'https://example.com/url' allowed: YES
+# Example 1: Block only Googlebot
+User-agent: Googlebot
+Disallow: /
+
+# Example 2: Block Googlebot and Adsbot
+User-agent: Googlebot
+User-agent: AdsBot-Google
+Disallow: /
+
+# Example 3: Block all crawlers except AdsBot (AdsBot crawlers must be named explicitly)
 User-agent: *
-Disallow:
+Disallow: /
